@@ -2,6 +2,9 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Collections;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -71,8 +74,8 @@ namespace ITLec.FormXmlManager.Forms
                 isUser = false;
             }
 
-            btnUpdate.Visible = isUser;
-            btnUpdatePublish.Visible = !isUser;
+            updateToolStripMenuItem.Enabled = isUser;
+            updateToolStripMenuItem.Enabled = !isUser;
 
             UpdateStatisticsPanel();
 
@@ -350,10 +353,6 @@ namespace ITLec.FormXmlManager.Forms
 
         private void buttonSaveAs_Click(object sender, EventArgs e)
         {
-
-
-
-
             Entity newformXml = formXml;
             string newFormXmlName = ITLec.CRMFormXml.AppCode.Common.ShowDialog("New FormXml Name:", "FormXml Name", txtName.Text+" - COPY");
 
@@ -516,6 +515,25 @@ namespace ITLec.FormXmlManager.Forms
             return guidReplacements[m.Value];
         }
 
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listViewControlsAnalysis_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(listViewControlsAnalysis.SelectedItems.Count == 1 
+                && listViewControlsAnalysis.SelectedItems[0].Text == "section")
+            {
+                sortToolStripMenuItem.Enabled = true;
+                sortToolStripMenuItem.ToolTipText = "Sort all fields in section in order.";
+            }
+            else
+            {
+                sortToolStripMenuItem.Enabled = false;
+                sortToolStripMenuItem.ToolTipText = "Enabled only for single sections.";
+            }
+        }
     }
     /*
         public class VariXFolding : IFoldingStrategy
